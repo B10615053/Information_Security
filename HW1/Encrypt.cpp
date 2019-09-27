@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <map>
+#include <vector>
 #include <exception>
 #include <algorithm>
 
@@ -12,11 +13,12 @@
 #define KEY_NOT_INTEGER_ERROR_MSG "The key of Caesar/Rail-fence must be an integer."
 #define KEY_OUT_OF_RANGE_ERROR_MSG "The key of Caesar/Rail-fence is out of range of Int."
 #define NO_CYPHER_EXISTS_ERROR_MSG "No such cypher method exists."
-#define ROW_TRANSPOSITION_CYPHER_KEY_WITH_NON_DIGITS_ERROR_MSG "The key of Row transposition cypher must be made of numbers only."
+#define ROW_TRANSPOSITION_CYPHER_KEY_WITH_NONDIGITS_ERROR_MSG "The key of Row transposition cypher must be made of digits (0-9) only."
 
 // using
 using std::string;
 using std::map;
+using std::vector;
 using std::invalid_argument;
 using std::out_of_range;
 
@@ -26,14 +28,18 @@ typedef string (*CypherFunction)(string, string);
 // some easy functions
 #define is_lower_case(c) ((c) >= 97 && (c) <= 122)
 #define is_upper_case(c) ((c) >= 65 && (c) <= 90)
+#define is_digit(c) ((c) >= 48 && (c) <= 57)
 #define to_lowercase(str) std::transform(str.begin(), str.end(), str.begin(), [] (unsigned char c) { return std::tolower(c); });
+
+// user-defined exceptions
+class row_transposition_cypher_key_with_nondigits: public std::exception { const char* what() const { return ROW_TRANSPOSITION_CYPHER_KEY_WITH_NONDIGITS_ERROR_MSG; } };
 
 // cypher methods
 string caesar(string, string) throw (invalid_argument, out_of_range);
 string playfair(string, string);
 string vernam(string, string);
-string row(string, string);
-string railFence(string, string);
+string row(string, string) throw (row_transposition_cypher_key_with_nondigits);
+string railFence(string, string) throw (invalid_argument, out_of_range);
 
 // map of cypher methods
 map<string, CypherFunction> cypherMethods = {
@@ -67,6 +73,9 @@ int main(int argc, char** argv) {
 
 	// the key of Caesar or Rail-fence is out of range of Int
 	catch (const out_of_range& e) { puts(KEY_OUT_OF_RANGE_ERROR_MSG), exit(EXIT_FAILURE); }
+
+	// the key of Caesar or Rail-fence is out of range of Int
+	catch (row_transposition_cypher_key_with_nondigits& e) { puts(ROW_TRANSPOSITION_CYPHER_KEY_WITH_NONDIGITS_ERROR_MSG), exit(EXIT_FAILURE); }
 
 	return 0;
 }
@@ -121,23 +130,64 @@ string vernam(string key, string plainText) {
 	return ret;
 }
 
-string row(string key, string plainText) {
+string row(string key, string plainText) throw (row_transposition_cypher_key_with_nondigits) {
 	int textLength = plainText.length();
 	int keyLength = key.length();
-	int keyIdx = 0;
-	int* row = (int*)malloc(sizeof(int) * keyLength);
+	map<int, int> orderingMap;
 	string ret = "";
 
-	// TODO: row transposition cypher
-	for (int k = 0; k < textLength; ++k) {
-		int rowIdx = k / keyLength;
-		int colIdx = k % keyLength;
-		row[colIdx] = plainText[k];
+	// make the ordering
+	for (int k = 0; k < keyLength; ++k) {
+		char keyChar = key[k];
+
+		if (is_digit(keyChar))
+			orderingMap.insert(std::make_pair(keyChar - 48, k));
+		else
+			throw row_transposition_cypher_key_with_nondigits();
 	}
 
-	return "row";
+	// ciphering
+	for (map<int, int>::iterator it = orderingMap.begin(); it != orderingMap.end(); ++it) {
+		for (int txtIdx = it->second; txtIdx < textLength; txtIdx += keyLength) {
+			char plainChar = plainText[txtIdx];
+
+			if (is_lower_case(plainChar))
+				ret += plainText[txtIdx] - 32;
+			else
+				ret += plainText[txtIdx];
+		}
+	}
+
+	return ret;
 }
 
-string railFence(string key, string plainText) {
-	return "rail_fence";
+string railFence(string key, string plainText) throw (invalid_argument, out_of_range) {
+	int integerKey = std::stoi(key);
+
+	// if the key is 1, return the plain-text directly
+	if (integerKey <= 1)
+		return plainText;
+
+	int divisor = (integerKey * 2) - 2;
+	int remainder;
+	int textLength = plainText.length();
+	vector<string> matrix = vector<string>(integerKey);
+	string ret = "";
+
+	// build the zigzag'd matrix
+	for (int k = 0; k < textLength; ++k) {
+		char plainChar = plainText[k];
+
+		remainder = k % divisor;
+		if (remainder < integerKey)
+			matrix[remainder] += is_lower_case(plainChar) ? plainChar - 32 : plainChar;
+		else
+			matrix[divisor - remainder] += is_lower_case(plainChar) ? plainChar - 32 : plainChar;
+	}
+
+	// make the cipher-text
+	for (int k = 0; k < integerKey; ++k)
+		ret += matrix[k];
+
+	return ret;
 }

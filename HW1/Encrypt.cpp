@@ -1,5 +1,5 @@
 /* Information Security Class HW1: Encrypt.cpp
-   Created by 四資工三甲 B10615031 許晉捷 */
+   Create by 四資工三甲 B10615031 許晉捷 */
 
 #include <iostream>
 #include <string>
@@ -152,8 +152,8 @@ string playfair(string key, string plainText) {
 	for (int k = 0; k < textLength; k += 2) {
 		char plainChar_1 = toupper(plainText[k]);
 		char plainChar_2 = k + 1 == textLength ? 'X' : toupper(plainText[k + 1]);
-		int rowIdx_1 = 0, colIdx_1 = 0,
-			rowIdx_2 = 0, colIdx_2 = 0;
+		int rowIdx_1 = -1, colIdx_1 = -1,
+			rowIdx_2 = -1, colIdx_2 = -1;
 
 		// if a pair is a repeated letter, insert filler like 'X'
 		if (plainChar_1 == plainChar_2)
@@ -167,6 +167,24 @@ string playfair(string key, string plainText) {
 				if (matrix[i][j] == plainChar_2)
 					rowIdx_2 = i, colIdx_2 = j;
 			}
+		}
+		if (rowIdx_1 == -1) {
+			plainChar_1 = plainChar_1 == 'I' ? 'J' : 'I';
+			for (int i = 0; i < 5; ++i)
+				for (int j = 0; j < 5; ++j)
+					if (matrix[i][j] == plainChar_1) {
+						rowIdx_1 = i, colIdx_1 = j;
+						break;
+					}
+		}
+		if (rowIdx_2 == -1) {
+			plainChar_2 = plainChar_2 == 'I' ? 'J' : 'I';
+			for (int i = 0; i < 5; ++i)
+				for (int j = 0; j < 5; ++j)
+					if (matrix[i][j] == plainChar_2) {
+						rowIdx_2 = i, colIdx_2 = j;
+						break;
+					}
 		}
 
 		// at the same row

@@ -1,4 +1,4 @@
-# Information_Security_Class
+# Information Security Class
 
 #### HW 1
 

@@ -1,8 +1,16 @@
 # Information Security Class
 
-#### HW 1
+### 組員
++ 四資工三甲 B10615031 許晉捷
++ 四資工三甲 B10615053 劉彥麟
 
-###### Encrypt.cpp by 四資工三甲 B10615031 許晉捷
+<hr />
+
+### HW 1
+
+##### Encrypt.cpp by 四資工三甲 B10615031 許晉捷
+
+##### <a target="_blank" href="https://github.com/Rekkursion/Information_Security_Class/releases">exe 檔在這邊</a>
 
 + 使用語言：C++
 

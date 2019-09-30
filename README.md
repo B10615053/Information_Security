@@ -34,3 +34,5 @@
         - 實作時，並沒有真的建立矩陣，而是先確定順序，然後跳著取字元即可。如 KEY 為 2341，則可以確定第一輪要取第四個 col、第二輪要取第一個 col &#8230;；取的時候第一輪從 plain text 中從第四個字元開始每四個取一次、第二輪從第一個字元開始每四個取一次&#8230;。
     * ./Encrypt.exe <strong>rail_fence</strong> &lt;KEY&gt; &lt;plaint text&gt;
         - KEY 必須為一小於 2^31 的正整數。
+
+##### Decrypt.cpp by 四資工三甲 B10615053 劉彥麟

@@ -19,7 +19,7 @@
 + 指令介紹：
 	* ./Encrypt.exe <strong>caesar</strong> &lt;KEY&gt; &lt;plaint text&gt;
     	- KEY 必須為一小於 2^31 的整數。
-    	- 如果 KEY 為負數，可以往反方向平移，如 KEY = -2，則 ABZY -> YZXW。
+    	- 如果 KEY 為負數，可以往反方向平移，如 KEY = -2，則 abzy -> YZXW。
     * ./Encrypt.exe <strong>playfair</strong> &lt;KEY&gt; &lt;plaint text&gt;
         - KEY 必須為一只包含英文字母的字串。
         - 依照投影片的作法，將 I/J 放在同一格。

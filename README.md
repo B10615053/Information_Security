@@ -36,3 +36,12 @@
         - KEY 必須為一小於 2^31 的正整數。
 
 ##### Decrypt.cpp by 四資工三甲 B10615053 劉彥麟
+
++ 使用語言：C++
+
++ 開發環境：Windows 10, Microsoft Visual Studio 2019
+
++ 指令介紹：
+	* ./Decrypt.exe <strong>caesar</strong> &lt;KEY&gt; &lt;CIPHER TEXT&gt;
+    	- KEY 必須為一小於 2^31 的整數。
+    	- 如果 KEY 為負數，可以往反方向平移，如 KEY = -2，則 YZXW -> abzy。

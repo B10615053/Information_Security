@@ -52,3 +52,4 @@
 	* ./Decrypt.exe <strong>rail_fence</strong> &lt;KEY&gt; &lt;CIPHER TEXT&gt;
         - KEY 必須為一小於 2^31 的正整數。
 	- 實作時，利用rail fence的重複圖形來切割並計算每個row的總字數，之後便可切個密文，按照fence的排列順序重組出原文。
+	

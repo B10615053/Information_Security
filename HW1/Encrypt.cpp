@@ -148,12 +148,6 @@ string playfair(string key, string plainText) {
 		}
 	}
 
-	for (int k = 0; k < 5; ++k) {
-		for (int j = 0; j < 5; ++j)
-			printf("%c ", matrix[k][j]);
-		puts("");
-	}
-
 	// do ciphering
 	for (int k = 0; k < textLength; k += 2) {
 		char plainChar_1 = toupper(plainText[k]);

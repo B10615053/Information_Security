@@ -9,7 +9,7 @@
 #include <exception>
 #include <algorithm>
 
-// error messages
+   // error messages
 #define ARGC_ERROR_MSG "Argument counts error."
 #define KEY_NOT_INTEGER_ERROR_MSG "The key of Caesar/Rail-fence must be an integer."
 #define KEY_OUT_OF_RANGE_ERROR_MSG "The key of Caesar/Rail-fence is out of range of Int."
@@ -25,7 +25,7 @@ using std::invalid_argument;
 using std::out_of_range;
 
 // function pointer define
-typedef string (*CipherFunction)(string, string);
+typedef string(*CipherFunction)(string, string);
 
 // some easy functions
 #define is_lower_case(c) ((c) >= 97 && (c) <= 122)
@@ -148,6 +148,12 @@ string playfair(string key, string plainText) {
 		}
 	}
 
+	for (int k = 0; k < 5; ++k) {
+		for (int j = 0; j < 5; ++j)
+			printf("%c ", matrix[k][j]);
+		puts("");
+	}
+
 	// do ciphering
 	for (int k = 0; k < textLength; k += 2) {
 		char plainChar_1 = toupper(plainText[k]);
@@ -156,7 +162,7 @@ string playfair(string key, string plainText) {
 			rowIdx_2 = -1, colIdx_2 = -1;
 
 		// if a pair is a repeated letter, insert filler like 'X'
-		if (plainChar_1 == plainChar_2)
+		if (plainChar_1 == plainChar_2 || (plainChar_1 == 'I' && plainChar_2 == 'J') || (plainChar_1 == 'J' && plainChar_2 == 'I'))
 			plainChar_2 = 'X', --k;
 
 		// find 2 locations of 2 plain characters respectively

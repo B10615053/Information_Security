@@ -45,6 +45,14 @@
 	* ./Decrypt.exe <strong>caesar</strong> &lt;KEY&gt; &lt;CIPHER TEXT&gt;
 		- KEY 必須為一小於 2^31 的整數。
 		- 如果 KEY 為負數，可以往反方向平移，如 KEY = -2，則 YZXW -> abzy。
+	* ./Decrypt.exe <strong>playfair</strong> &lt;KEY&gt; &lt;CIPHER TEXT&gt;
+		- KEY 必須為一只包含英文字母的字串。
+		- 依照投影片的作法，將 I/J 放在同一格。
+		- 兩兩分組時，若有相同字母分到同一組，將會插一個 X 在中間；若總數為奇數個，則將在最後面補上一個 X。如明文為 hell，則 HELL -> HELXL（因為 LL 在同一組） -> HELXLX（因為插完後總數變奇數個）。
+   	* ./Decrypt.exe <strong>vernam</strong> &lt;KEY&gt; &lt;CIPHER TEXT&gt;
+		- KEY 必須為一只包含英文字母的字串。
+		- 若 KEY 的長度比 CIPHER TEXT 短，使用 Auto key 的方式補滿。
+		- 將字母轉成 0-25，然後各個進行 XOR 運算，得出來的數字再加上 97；將字母轉為小寫，不過也有可能出現其他符號。
 	* ./Decrypt.exe <strong>row</strong> &lt;KEY&gt; &lt;CIPHER TEXT&gt;
 		- KEY 必須為一只包含數字 0-9 的字串。
 		- 雖然投影片中只有 1-9，但為了保險起見，這支程式可以接受 0-9，0 比 1 優先。

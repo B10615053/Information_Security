@@ -43,13 +43,13 @@
 
 + 指令介紹：
 	* ./Decrypt.exe <strong>caesar</strong> &lt;KEY&gt; &lt;CIPHER TEXT&gt;
-    	- KEY 必須為一小於 2^31 的整數。
-    	- 如果 KEY 為負數，可以往反方向平移，如 KEY = -2，則 YZXW -> abzy。
+		- KEY 必須為一小於 2^31 的整數。
+		- 如果 KEY 為負數，可以往反方向平移，如 KEY = -2，則 YZXW -> abzy。
 	* ./Decrypt.exe <strong>row</strong> &lt;KEY&gt; &lt;CIPHER TEXT&gt;
-        - KEY 必須為一只包含數字 0-9 的字串。
-        - 雖然投影片中只有 1-9，但為了保險起見，這支程式可以接受 0-9，0 比 1 優先。
-        - 實作時，先分別取出每個column的長度，之後利用陣列儲存每個column中第一個row在密文中的位址，按照key中的順序將整個句子重組。
+		- KEY 必須為一只包含數字 0-9 的字串。
+		- 雖然投影片中只有 1-9，但為了保險起見，這支程式可以接受 0-9，0 比 1 優先。
+		- 實作時，先分別取出每個column的長度，之後利用陣列儲存每個column中第一個row在密文中的位址，按照key中的順序將整個句子重組。
 	* ./Decrypt.exe <strong>rail_fence</strong> &lt;KEY&gt; &lt;CIPHER TEXT&gt;
-        - KEY 必須為一小於 2^31 的正整數。
-	- 實作時，利用rail fence的重複圖形來切割並計算每個row的總字數，之後便可切個密文，按照fence的排列順序重組出原文。
+		- KEY 必須為一小於 2^31 的正整數。
+		- 實作時，利用rail fence的重複圖形來切割並計算每個row的總字數，之後便可切個密文，按照fence的排列順序重組出原文。
 	

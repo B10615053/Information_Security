@@ -7,10 +7,9 @@
 <hr />
 
 ### HW 1
+##### <a target="_blank" href="https://github.com/Rekkursion/Information_Security_Class/releases">exe 檔在這邊</a>
 
 ##### Encrypt.cpp by 四資工三甲 B10615031 許晉捷
-
-##### <a target="_blank" href="https://github.com/Rekkursion/Information_Security_Class/releases">exe 檔在這邊</a>
 
 + 使用語言：C++
 

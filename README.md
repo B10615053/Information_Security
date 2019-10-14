@@ -1,14 +1,15 @@
 # Information Security Class
 
-## 組員
+## <span>目錄</span>
++ <a href="#members">組員</a>
++ <a href="#hw1">HW1</a>
++ <a href="#hw2">HW2</a>
+
+## <span id="members">組員</span>
 + 四資工三甲 B10615031 許晉捷
 + 四資工三甲 B10615053 劉彥麟
 
-
-
-
-
-## HW 1
+## <span id="hw1">HW 1</span>
 
 #### 分工
 + 四資工三甲 B10615031 許晉捷 -> Encrypt
@@ -73,3 +74,11 @@
 		- KEY 必須為一小於 2^31 的正整數。
 		- 實作時，利用rail fence的重複圖形來切割並計算每個row的總字數，之後便可切個密文，按照fence的排列順序重組出原文。<br /><br />
 	
+
+## <span id="hw2">HW 2</span>
+
+#### 分工（和 HW 1 不同）
++ 四資工三甲 B10615031 許晉捷 -> Decrypt
++ 四資工三甲 B10615053 劉彥麟 -> Encrypt
+
+<hr />

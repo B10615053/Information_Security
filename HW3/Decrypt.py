@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[9]:
+# In[11]:
 
 
 import sys
@@ -58,8 +58,6 @@ def preprocess(argv):
     
     # get the block cipher mode
     block_cipher_mode = argv[4].upper()
-    
-    print(block_cipher_mode)
     
     # if there's an explicit IV typed by users
     if len(argv) == 6:
@@ -275,8 +273,8 @@ if __name__ == '__main__':
                         'Note that the mode must only be \'ECB\' or \'CBC\' or \'SOC\'')
         
         # for testing
-        t = ('', 'encrypted.png', 'za_warudo.png', 'T78hgiQs+-0 8i[p', 'SOC', 'q*s[ty=d-029wjai')
-        preprocess(t)
+#         t = ('', 'encrypted.png', 'za_warudo.png', 'T78hgiQs+-0 8i[p', 'SOC', 'q*s[ty=d-029wjai')
+#         preprocess(t)
     else:
         preprocess(sys.argv)
 

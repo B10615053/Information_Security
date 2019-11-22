@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[54]:
+# In[59]:
 
 
 import sys
@@ -25,7 +25,7 @@ def print_exception(main_message, *sub_messages):
 def readjust_output_image_path(original_output_image_path, input_image_extension_with_dot='.png'):
     # if users didn't type any characters for the output image, set a default name
     if len(original_output_image_path) == 0:
-        return 'it_is_the_default_output_image_name_since_you_didnt_type_any_characters____why_you_didnt_type_it.png'
+        return 'This_is_the_default_output_image_name_since_you_didnt_type_any_characters____why_you_didnt_type_it.png'
     
     # the extension typed by users is .ppm, replace it w/ the extension of the input image
     elif original_output_image_path.endswith('.ppm'):
@@ -202,25 +202,6 @@ def do_cipher(cipher_text, key, mode, iv):
         idx += 16
     
     return plain_text
-
-### ============================= ###
-
-# pad the hex string to make sure its length is multiple of 16 bytes
-# use the method of PKCS
-def pads(hex_string):
-    length = len(hex_string)
-    
-    # need to be padded
-    if length % 16 != 0:
-        num_of_padding = 16 - (length % 16)
-        num_of_padding_in_hex_string = hex(num_of_padding).encode('utf8')
-        
-        ret = hex_string + (num_of_padding_in_hex_string * num_of_padding)
-        return ret
-    
-    # no need, return directly
-    else:
-        return hex_string
     
 ### ============================= ###
 

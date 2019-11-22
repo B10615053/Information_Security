@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[11]:
+# In[18]:
 
 
 import sys
@@ -108,8 +108,8 @@ def preprocess(argv):
             width = ppm_image.size[0]
             height = ppm_image.size[1]
 
-            # get whole pixels of the image and build the plain text as a bytearray
-            plain_text = b''
+            # get whole pixels of the image and build the cipher text as a bytearray
+            cipher_text = b''
             for y in range(height):
                 for x in range(width):
                     # a pixel has 3 channels (R, G, and B) in the color mode of RGB
@@ -118,22 +118,22 @@ def preprocess(argv):
                         a_byte = channel.to_bytes(1, 'little')
 
                         # build the plain text which is actually a bytearray
-                        plain_text += a_byte
+                        cipher_text += a_byte
         
             # do the decryt cipher algorithm
-            cipher_text = do_cipher(plain_text, key, block_cipher_mode, initialization_vector)
+            plain_text = do_cipher(cipher_text, key, block_cipher_mode, initialization_vector)
             
             # set the decrypted output ppm image
-            cipher_idx = 0
+            plain_text_idx = 0
             for y in range(height):
                 for x in range(width):
                     # a unit of 3 has R, G, and B orderly
-                    red = cipher_text[cipher_idx]
-                    green = cipher_text[cipher_idx + 1]
-                    blue = cipher_text[cipher_idx + 2]
+                    red = plain_text[plain_text_idx]
+                    green = plain_text[plain_text_idx + 1]
+                    blue = plain_text[plain_text_idx + 2]
                     
-                    # the index of cipher text adds by 3 every iteration
-                    cipher_idx += 3
+                    # the index of plain text adds by 3 every iteration
+                    plain_text_idx += 3
                     
                     # put the pixel into the ppm image
                     ppm_image.putpixel((x, y), (red, green, blue))
@@ -148,7 +148,7 @@ def preprocess(argv):
 
 ### ============================= ###
 
-# do the cipher algorithm
+# do the cipher algorithm to decrypt
 def do_cipher(cipher_text, key, mode, iv):
     # get the length of the cipher text
     text_length = len(cipher_text)
@@ -156,7 +156,7 @@ def do_cipher(cipher_text, key, mode, iv):
     # build an AES cryptor with ECB mode
     ecb_cryptor = AES.new(key.encode('utf8'), AES.MODE_ECB)
     
-    # create a iterative-IV for every non-ECB block cipher, initially set to IV
+    # create an iterative-IV for every non-ECB block cipher, initially set to IV
     iter_iv = iv.encode('utf8')
     
     plain_text = b''

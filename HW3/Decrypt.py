@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[59]:
+# In[9]:
 
 
 import sys
@@ -57,7 +57,9 @@ def preprocess(argv):
     key = argv[3]
     
     # get the block cipher mode
-    block_cipher_mode = argv[4]
+    block_cipher_mode = argv[4].upper()
+    
+    print(block_cipher_mode)
     
     # if there's an explicit IV typed by users
     if len(argv) == 6:
@@ -270,11 +272,11 @@ if __name__ == '__main__':
                         'Note that the images could be absolute paths or relative paths',
                         'Note that the key must be the length of 16 bytes',
                         'If the file path or key comprises any white space, you must quote it with a pair of \"\"',
-                        'Note that the mode must only be \'ECB\' or \'CBC\'')
+                        'Note that the mode must only be \'ECB\' or \'CBC\' or \'SOC\'')
         
         # for testing
-#         t = ('', 'encrypted.png', 'za_warudo.png', 'T78hgiQs+-0 8i[p', 'SOC', 'q*s[ty=d-029wjai')
-#         preprocess(t)
+        t = ('', 'encrypted.png', 'za_warudo.png', 'T78hgiQs+-0 8i[p', 'SOC', 'q*s[ty=d-029wjai')
+        preprocess(t)
     else:
         preprocess(sys.argv)
 

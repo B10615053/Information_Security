@@ -159,7 +159,7 @@ def preprocess(argv):
     if len(argv) == 6:
         initializationVector = argv[5]
     else:
-        initializationVector = 15 * '\x00' + '\x01'
+        initializationVector = 16 * '\x00'
     # Try to open as an image
     try:
         # Open the original image with RGB color mode

@@ -1,13 +1,12 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[18]:
+# In[61]:
 
 
 import sys
 import os
 from PIL import Image
-from Crypto.Util.Padding import pad, unpad
 from Crypto.Cipher import AES
 
 ### ============================= ###
@@ -187,7 +186,7 @@ def do_cipher(cipher_text, key, mode, iv):
         else:
             # pad the block if it needs
             if len(block) < 16:
-                block = pad(block, 16)
+                block = pkcs7_pad(block, 16)
             
             # do block cipher
             decrypted = ecb_cryptor.decrypt(block)
@@ -260,6 +259,32 @@ def xor(lhs, rhs):
 
 ### ============================= ###
 
+# padding method: pkcs7
+def pkcs7_pad(input_byte_arr, expected_padded_size):
+    # get the length of the input bytearray
+    len_of_byte_arr = len(input_byte_arr)
+    
+    # the length equals to or is longer than the expected padded size, return directly
+    if len_of_byte_arr >= expected_padded_size:
+        return input_byte_arr
+    
+    # the size shall be padded
+    if len_of_byte_arr == 0:
+        padding_size = expected_padded_size
+    else:
+        padding_size = (expected_padded_size - len_of_byte_arr) % expected_padded_size
+        
+    # the character shall be padded
+    padding_character = bytes([padding_size])
+    
+    # the bytearray shall be padded
+    padding_byte_arr = padding_character * padding_size
+    
+    # do padding and return the result
+    return input_byte_arr + padding_byte_arr
+
+### ============================= ###
+
 # main
 if __name__ == '__main__':
     # the length of argv must be 5, or 6 (includes IV or not)
@@ -277,6 +302,12 @@ if __name__ == '__main__':
 #         preprocess(t)
     else:
         preprocess(sys.argv)
+
+
+# In[ ]:
+
+
+
 
 
 # In[ ]:

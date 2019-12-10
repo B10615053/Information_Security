@@ -297,17 +297,26 @@ class RSA():
         phi_of_n = (p - 1) * (q - 1)
         
         # step 4. select e from [1, phi(n) - 1] such that gcd(e, phi(n)) = 1
-        max_tries = 50000
-        # step 4-1. try 50000 times to randomly select e
+        max_tries = 50
+        # step 4-1. try to randomly select e in a small range: [1, 100],
+        #           because a small e doesn't weaken the security of RSA
         for _ in range(max_tries):
-            e = randint(1, phi_of_n - 1)
+            e = randint(1, 100 if 100 <= phi_of_n - 1 else (phi_of_n - 1))
             gcd = NumberTheory.get_gcd(e, phi_of_n)
             if gcd == 1:
                 break
-        # step 4-2. if cannot find out valid e after 50000 tries,
-        #           directly assign to (phi(n) - 1) which is definitely relatively prime to phi(n)
+        # step 4-2. if didn't find out an e in the first 50 tries in the small range: [1, 100],
+        #           then try the real range in [1, phi(n) - 1]
         if gcd > 1:
-            e = phi_of_n - 1
+            for _ in range(max_tries):
+                e = randint(1, phi_of_n - 1)
+                gcd = NumberTheory.get_gcd(e, phi_of_n)
+                if gcd == 1:
+                    break
+        # step 4-3. if still cannot find out a valid e after 2 * 50 tries,
+        #           directly assign to 1, which is definitely relatively prime to phi(n)
+        if gcd > 1:
+            e = 1
         
         # step 5. compute d such that de ≡ 1 (mod phi(n))
         d = NumberTheory.get_multiplicative_inverse(e, phi_of_n)

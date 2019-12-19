@@ -205,30 +205,6 @@ class NumberTheory():
         
         return u1 % modulus
 
-    # speed-up for calculating ((base ** exp) mod n) where n = p * q where p and q are both primes
-    @staticmethod
-    def chinese_remainder_theorem(base, exp, p, q):
-        # calculate exp_p and exp_q
-        exp_p = exp % (p - 1)
-        exp_q = exp % (q - 1)
-
-        # get the multiplicative inverse of q with modulus p
-        q_inv = NumberTheory.get_multiplicative_inverse(q, p)
-
-        # divide the orginal equation into 2 equations:
-        # M  ≡ base ** exp mod (p * q)
-        # ->
-        # m1 ≡ base ** exp_p mod p
-        # m2 ≡ base ** exp_q mod q
-        m_1 = NumberTheory.square_and_multiply(base, exp_p, p)
-        m_2 = NumberTheory.square_and_multiply(base, exp_q, q)
-        
-        # find the smallest positive integer as the multiple of q
-        h = (q_inv * (m_1 - m_2)) % p
-
-        # return the calculated result
-        return m_2 + (h * q)
-
 ### ============================= ###
 
 # the DSA class
@@ -300,8 +276,8 @@ class DSA():
         # step 3-1. hash the message through SHA-1
         digest = DSA.do_hashing(message)
         # step 3-2. calculate the inverse of the ephemeral key (k_E) w/ the modulus of q
-        # use the theory that a^(p-2) is the inverse of a w/ the modulus of p
-        inv_k_E = NumberTheory.square_and_multiply(k_E, q - 2, q)
+        inv_k_E = NumberTheory.get_multiplicative_inverse(k_E, q)
+        # inv_k_E = NumberTheory.square_and_multiply(k_E, q - 2, q)
         # step 3-3. compute s
         s = ((digest + (d * r)) * inv_k_E) % q
         
@@ -324,7 +300,8 @@ class DSA():
         r, s = DSA.load_signature()
 
         # step 1. compute auxiliary value w = inverse(s) mod q
-        inv_s = NumberTheory.square_and_multiply(s, q - 2, q)
+        inv_s = NumberTheory.get_multiplicative_inverse(s, q)
+        # inv_s = NumberTheory.square_and_multiply(s, q - 2, q)
         w = inv_s % q
         
         # step 2. compute auxiliary value u_1 = (w * sha1(x)) mod q, where x is the message
